@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
   stock: {
     type: Number,
     require: true,
-  },  
+  },
   price: {
     type: Number,
     require: true,

@@ -12,7 +12,7 @@ const stockSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["in", "out"],
-    require: true
+    require: true,
   },
 });
 

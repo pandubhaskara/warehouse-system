@@ -83,7 +83,7 @@ module.exports = {
       const data = await stock.create({
         name: productName.name,
         stock: body.stock,
-        status: "in"
+        status: "in",
       });
       const oldStock = productName.stock;
 
@@ -94,7 +94,8 @@ module.exports = {
       doc = await product.findOne(filter);
       return res.status(200).json({
         status: "success",
-        data: data, doc
+        data: data,
+        doc,
       });
     } catch (error) {
       return res.status(500).json({
@@ -111,7 +112,7 @@ module.exports = {
       const data = await stock.create({
         name: productName.name,
         stock: body.stock,
-        status: "out"
+        status: "out",
       });
       const oldStock = productName.stock;
       const filter = { name: productName.name };
@@ -120,7 +121,8 @@ module.exports = {
       doc = await product.findOne(filter);
       return res.status(200).json({
         status: "success",
-        data: data, doc
+        data: data,
+        doc,
       });
     } catch (error) {
       return res.status(500).json({
@@ -151,7 +153,7 @@ module.exports = {
       });
     }
   },
-  history: async(req,res)=>{
+  history: async (req, res) => {
     const body = req.body;
     try {
       const data = await stock.find(body);
@@ -172,5 +174,5 @@ module.exports = {
         message: "internal server error",
       });
     }
-  }
+  },
 };
