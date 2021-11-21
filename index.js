@@ -5,7 +5,7 @@ const db = require('./database/db')
 const route = require('./routes')
 
 db()
-router.get("/",(req,res)=>{
+app.get("/",(req,res)=>{
     res.status(200).send({
         status: "success",
         message:"API is online"
