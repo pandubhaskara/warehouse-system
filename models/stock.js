@@ -9,6 +9,11 @@ const stockSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  status: {
+    type: String,
+    enum: ["in", "out"],
+    require: true
+  },
 });
 
 module.exports = Stock = mongoose.model("stock", stockSchema);

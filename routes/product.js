@@ -6,9 +6,10 @@ const upload = multer();
 
 router.post("/", upload.any(), product.create);
 router.get("/", upload.any(), product.readAll);
+router.get("/:id", product.readOne);
+router.get("/history", product.history)
 router.post("/stock/in/:id", upload.any(), product.addStock)
 router.post("/stock/out/:id", upload.any(), product.deleteStock)
-// router.get("/:id", product.readOne);
 router.put("/:id", upload.any(), product.update);
 router.delete("/:id", product.delete);
 

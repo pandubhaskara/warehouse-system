@@ -1,4 +1,5 @@
 const product = require("../models/product");
+const stock = require("../models/stock");
 
 module.exports = {
   create: async (req, res) => {
@@ -78,16 +79,22 @@ module.exports = {
     try {
       const id = req.params.id;
       const body = req.body;
-      let productStock = await product.findById(id);
-      const oldStock = productStock.stock;
+      const productName = await product.findById(id);
+      const data = await stock.create({
+        name: productName.name,
+        stock: body.stock,
+        status: "in"
+      });
+      const oldStock = productName.stock;
 
-      const filter = { name: body.name };
-      const stock = { stock: parseInt(oldStock) + parseInt(body.stock) };
-      let doc = await product.findOneAndUpdate(filter, stock);
+      const filter = { name: productName.name };
+      const stocks = { stock: parseInt(oldStock) + parseInt(body.stock) };
+
+      let doc = await product.findOneAndUpdate(filter, stocks);
       doc = await product.findOne(filter);
       return res.status(200).json({
         status: "success",
-        data: doc,
+        data: data, doc
       });
     } catch (error) {
       return res.status(500).json({
@@ -100,16 +107,20 @@ module.exports = {
     try {
       const id = req.params.id;
       const body = req.body;
-      let productStock = await product.findById(id);
-      const oldStock = productStock.stock;
-
-      const filter = { name: body.name };
-      const stock = { stock: parseInt(oldStock) - parseInt(body.stock) };
-      let doc = await product.findOneAndUpdate(filter, stock);
+      const productName = await product.findById(id);
+      const data = await stock.create({
+        name: productName.name,
+        stock: body.stock,
+        status: "out"
+      });
+      const oldStock = productName.stock;
+      const filter = { name: productName.name };
+      const stocks = { stock: parseInt(oldStock) - parseInt(body.stock) };
+      let doc = await product.findOneAndUpdate(filter, stocks);
       doc = await product.findOne(filter);
       return res.status(200).json({
         status: "success",
-        data: doc,
+        data: data, doc
       });
     } catch (error) {
       return res.status(500).json({
@@ -140,4 +151,26 @@ module.exports = {
       });
     }
   },
+  history: async(req,res)=>{
+    const body = req.body;
+    try {
+      const data = await stock.find(body);
+      if (data.length == 0) {
+        return res.status(500).json({
+          status: "failed",
+          message: "there is no data",
+        });
+      }
+      return res.status(200).json({
+        status: "success",
+        data: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        status: "error",
+        message: "internal server error",
+      });
+    }
+  }
 };
