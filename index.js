@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 const db = require("./database/db");
 const route = require("./routes");
 const host = "0.0.0.0";
