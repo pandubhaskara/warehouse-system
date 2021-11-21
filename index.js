@@ -3,7 +3,7 @@ const app = express()
 const port = 5000 || process.env.PORT
 const db = require('./database/db')
 const route = require('./routes')
-
+require('dotenv').config()
 db()
 
 app.get("/",(req,res)=>{
