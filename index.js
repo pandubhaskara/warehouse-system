@@ -5,6 +5,7 @@ const db = require('./database/db')
 const route = require('./routes')
 
 db()
+
 app.get("/",(req,res)=>{
     res.status(200).send({
         status: "success",
